@@ -533,10 +533,10 @@ void vp_app_impl::init_dpi()
 		win32_setprocessdpiaware = (set_process_dpi_aware_t)GetProcAddress(user32, "SetProcessDPIAware");
 	}
 
-	auto shvp_app_impl = LoadLibrary("shvp_app_impl.dll");
-	if (shvp_app_impl) {
-		win32_setprocessdpiawareness = (set_process_dpi_awareness_t)GetProcAddress(shvp_app_impl, "SetProcessDpiAwareness");
-		win32_getdpiformonitor = (get_dpi_for_monitor_t)GetProcAddress(shvp_app_impl, "GetDpiForMonitor");
+	auto shcore = LoadLibrary("shcore.dll");
+	if (shcore) {
+		win32_setprocessdpiawareness = (set_process_dpi_awareness_t)GetProcAddress(shcore, "SetProcessDpiAwareness");
+		win32_getdpiformonitor = (get_dpi_for_monitor_t)GetProcAddress(shcore, "GetDpiForMonitor");
 	}
 
 	bool dpiAware = false;
@@ -575,8 +575,8 @@ void vp_app_impl::init_dpi()
 	if (user32) {
 		FreeLibrary(user32);
 	}
-	if (shvp_app_impl) {
-		FreeLibrary(shvp_app_impl);
+	if (shcore) {
+		FreeLibrary(shcore);
 	}
 }
 
